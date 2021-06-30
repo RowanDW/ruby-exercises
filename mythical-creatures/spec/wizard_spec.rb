@@ -18,28 +18,32 @@ RSpec.describe Wizard do
   end
 
   it 'is not always bearded' do
-    wizard = Wizard.new('Valerie', bearded: false)
+    wizard = Wizard.new('Valerie', false)
     expect(wizard.bearded?).to be false
   end
 
   it 'has root powers' do
-    wizard = Wizard.new('Stella', bearded: false)
+    wizard = Wizard.new('Stella', false)
     expect(wizard.incantation('chown ~/bin')).to eq('sudo chown ~/bin')
   end
 
   it 'has many root powers' do
-    wizard = Wizard.new('Sal', bearded: true)
+    wizard = Wizard.new('Sal', true)
     expect(wizard.incantation('rm -rf /home/mirandax')).to eq('sudo rm -rf /home/mirandax')
   end
 
   it 'starts rested' do
     # create wizard
     # .rested? returns true
+    wizard = Wizard.new('Raz')
+    expect(wizard.rested?).to be true
   end
 
   it 'can cast spells' do
     # create wizard
     # .cast returns "MAGIC MISSILE!"
+    wizard = Wizard.new('Raz')
+    expect(wizard.cast).to eq('MAGIC MISSILE!')
   end
 
   it 'gets tired after casting three spells' do
@@ -48,5 +52,15 @@ RSpec.describe Wizard do
     # check if wizard is rested
     # casts spell
     # check wizard is not rested
+    wizard = Wizard.new('Raz')
+    2.times do
+      wizard.cast
+    end
+    expect(wizard.rested?).to be true
+
+    wizard.cast
+
+    expect(wizard.rested?).to be false
+
   end
 end
